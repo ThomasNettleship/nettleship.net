@@ -6,12 +6,15 @@
 
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-ARG NODE_VERSION=22.2.0
+ARG NODE_VERSION=24.7.0
 
 FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
 ENV NODE_ENV production
+
+# Hardcode the port that the application listens on, this will override any .env value, but still allows for the port to be set in development.
+ENV PORT 8000
 
 # Create logs directory and set appropriate permissions
 RUN mkdir -p /usr/src/app/logs && chown -R node:node /usr/src/app/logs && chmod -R 755 /usr/src/app/logs
@@ -34,7 +37,10 @@ USER node
 COPY . .
 
 # Expose the port that the application listens on.
-EXPOSE 3000
+EXPOSE 8000
 
 # Run the application.
 CMD npm run prod
+
+# docker build -t nettleship-api:latest .
+

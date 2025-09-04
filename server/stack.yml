@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  nettleship-net-api:
+    image: nettleship-net-api:latest
+    env_file:
+      - .env.production
+    volumes:
+      - ./logs:/usr/src/app/logs
+    networks:
+      - internal
+      - traefik
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+
+  postgres-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: userpassword
+      POSTGRES_DB: nettleship_net
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - internal
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  traefik:
+    external: true
+  internal:

@@ -6,17 +6,18 @@ require('dotenv').config();
 
 async function sendEmail(to, template, data) {
   const hbs = await import('nodemailer-express-handlebars');
-
+  
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: process.env.EMAIL_PORT == 465, // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
   });
 
-  transporter.use(
-    'compile',
+  transporter.use('compile',
     hbs.default({
       viewEngine: {
         extName: '.hbs',

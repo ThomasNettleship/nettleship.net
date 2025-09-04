@@ -1,12 +1,7 @@
-# Ignore node_modules folder
 node_modules
-# Ignore logs
-logs
-# Ignore environment files
-.env
-# Ignore git directory
+npm-debug.log
 .git
-
-**/bin
-**/obj
-**/node_modules
+Dockerfile
+.dockerignore
+logs
+data
