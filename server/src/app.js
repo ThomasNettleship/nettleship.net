@@ -14,6 +14,9 @@ const corsMiddleware = require('./config/corsOptions');
 const app = express();
 enableWs(app);
 
+// Enable CORS for all routes
+app.use(corsMiddleware);
+
 // trust first proxy
 app.set('trust proxy', 1);
 
@@ -44,9 +47,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-// Enable CORS for all routes
-app.use(corsMiddleware);
 
 // rate limiter middleware - limits the number of requests from an IP
 app.use(rateLimiter.generalLimiter);
