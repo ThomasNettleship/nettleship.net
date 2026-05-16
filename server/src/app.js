@@ -15,8 +15,17 @@ const app = express();
 enableWs(app);
 
 // Enable CORS for all routes
-app.use(corsMiddleware);
+//app.use(corsMiddleware);
 
+const cors = require('cors');
+
+// Enable CORS for all routes
+app.use(cors({
+  origin: 'https://nettleship.net',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+}));
 // trust first proxy
 app.set('trust proxy', 1);
 
