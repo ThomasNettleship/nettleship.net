@@ -68,7 +68,7 @@ require('./api/routes')(app);
 
 // server status route, useful for monitoring services
 app.get('/api/status', (req, res) => {
-  res.status(200).json({ status: 'Server is running' });
+  res.status(200).json({ status: 'Server is running test' });
 });
 
 // error handling middleware
